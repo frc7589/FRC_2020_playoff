@@ -3,6 +3,7 @@ package frc.robot.commands;
 import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ManualShoot extends CommandBase {
@@ -25,15 +26,15 @@ public class ManualShoot extends CommandBase {
     @Override
     public void execute() {
         if (m_shootTrigger.getAsBoolean()) {
-            m_shooterSubsystem.trigger.set(-0.2);
+            m_shooterSubsystem.trigger.set(Constants.kShootTrigger);
         }
         else {m_shooterSubsystem.trigger.set(0);}
 
         if (m_susanClock.getAsBoolean()) {
-            m_shooterSubsystem.lazySusan.set(0.3);
+            m_shooterSubsystem.lazySusan.set(Constants.kSusanSpeed);
         }
         if (m_susanCounter.getAsBoolean()) {
-            m_shooterSubsystem.lazySusan.set(-0.3);
+            m_shooterSubsystem.lazySusan.set(-Constants.kSusanSpeed);
         }
     }
 }

@@ -28,7 +28,7 @@ public class RobotContainer {
   private final DriveSubsystem drive = new DriveSubsystem();
   private final IntakeSubsystem intake = new IntakeSubsystem();
   private final ShooterSubsystem shooter = new ShooterSubsystem();
-  //private final Compressor m_compressor = new Compressor(Constants.getCAN("PCM"));
+  private final Compressor m_compressor = new Compressor(Constants.getCAN("PCM"));
 
   private final XboxController driver1 = new XboxController(Constants.getCTRL("player 1"));
   private final XboxController driver2 = new XboxController(Constants.getCTRL("player 2"));
@@ -40,8 +40,8 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    //m_compressor.start();
-    //m_compressor.setClosedLoopControl(true);
+    m_compressor.start();
+    m_compressor.setClosedLoopControl(true);
 
     drive.setDefaultCommand(
       new BaseTankDrive(

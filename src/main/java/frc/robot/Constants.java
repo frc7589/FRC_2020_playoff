@@ -29,7 +29,8 @@ public final class Constants {
     public final static double kTurnSpeed = 0.6;
 
     // Shooter
-    public final static double kWheelSpeed = 0.5;
+    public final static double kShootTrigger = -0.2;
+    public final static double kSusanSpeed = 0.3;
 
     // Elevator
     public final static double kElevatorSpeed = 1; 
