@@ -55,6 +55,11 @@ public class RobotContainer {
         () -> driver1.getTriggerAxis(Hand.kRight) > 0.8,
         () -> driver1.getBumper(Hand.kLeft),
         () -> driver1.getBumper(Hand.kRight)));
+    intake.setDefaultCommand(
+      new Intaking(
+        intake, 
+        () -> driver1.getYButtonPressed(),
+        () -> driver1.getXButtonPressed()));
   }
 
   /**
@@ -64,8 +69,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(driver1, Button.kX.value)
-    .whenHeld(new Spin(intake), true);
+
   }
 
 

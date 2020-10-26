@@ -13,7 +13,7 @@ public class ShooterSubsystem extends SubsystemBase {
   NetworkTable table = NetworkTableInstance.getDefault().getTable("myTable");
 
   public WPI_VictorSPX lazySusan = new WPI_VictorSPX(Constants.getCAN("lazy susan"));
-  public WPI_TalonSRX trigger = new WPI_TalonSRX(Constants.getCAN("shoot trigger"));
+  public WPI_VictorSPX trigger = new WPI_VictorSPX(Constants.getCAN("shoot trigger"));
   public WPI_TalonSRX wheel = new WPI_TalonSRX(Constants.getCAN("shoot fire"));
 
   public DigitalInput susanLeft = new DigitalInput(Constants.getDIO("susan left"));

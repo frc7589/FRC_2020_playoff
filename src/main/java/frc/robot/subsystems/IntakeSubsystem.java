@@ -11,7 +11,7 @@ import frc.robot.Constants;
 public class IntakeSubsystem extends SubsystemBase {
   NetworkTable table = NetworkTableInstance.getDefault().getTable("myTable");
 
-  public WPI_VictorSPX intaker = new WPI_VictorSPX(Constants.getCAN("lazy susan"));
+  public WPI_VictorSPX intaker = new WPI_VictorSPX(Constants.getCAN("intake wheel"));
   public WPI_VictorSPX spin = new WPI_VictorSPX(Constants.getCAN("spin"));
 
   public DoubleSolenoid leftArm;

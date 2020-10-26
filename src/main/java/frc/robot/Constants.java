@@ -28,6 +28,9 @@ public final class Constants {
     public final static double kDriveSpeed = 0.7;
     public final static double kTurnSpeed = 0.6;
 
+    // Intake
+    public final static double kIntakeSpeed = -0.6;
+
     // Shooter
     public final static double kShootTrigger = -0.2;
     public final static double kSusanSpeed = 0.3;
@@ -52,23 +55,23 @@ public final class Constants {
         setCAN("PCM", 49);
 
         // map for CAN port for VictorSPX
-        setCAN("drive_lf", 1);
+        setCAN("drive_lf", 5);
         setCAN("drive_rf", 0);
-        setCAN("panel arm", 8);
-        setCAN("panel spinner", -1);
+        setCAN("panel arm", 6);
+        setCAN("panel spinner", 1);
         setCAN("spin", 7);
-        setCAN("intake wheel", 9); // not connected to controller
-        setCAN("elevator", 2);
-        setCAN("lifter_l", 4);
-        setCAN("lifter_r", 5);
+        setCAN("intake wheel", 8);
+        setCAN("elevator", 4);
+        setCAN("lifter_l", 3);
+        setCAN("lifter_r", 2);
+        setCAN("shoot trigger", 9);
         
 
         // map for CAN port for TalonSRX
-        setCAN("shoot fire", 4); // not connected to controller
+        setCAN("shoot fire", 2);
         setCAN("lazy susan", 3);
-        setCAN("drive_rb", 1);
-        setCAN("drive_lb", 2);
-        setCAN("shoot trigger", 9);
+        setCAN("drive_rb", 0);
+        setCAN("drive_lb", 1);
         
         // map for PCM pneumatic devices
         setPCM("intake left forward", 0);

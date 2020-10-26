@@ -36,5 +36,7 @@ public class ManualShoot extends CommandBase {
         if (m_susanCounter.getAsBoolean()) {
             m_shooterSubsystem.lazySusan.set(-Constants.kSusanSpeed);
         }
+        System.out.println(m_shooterSubsystem.lazySusan.getSelectedSensorPosition());
+        System.out.println(m_shooterSubsystem.wheel.getSelectedSensorVelocity());
     }
 }
