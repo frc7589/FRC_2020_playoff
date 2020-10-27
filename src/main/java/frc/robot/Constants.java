@@ -29,14 +29,20 @@ public final class Constants {
     public final static double kTurnSpeed = 0.6;
 
     // Intake
-    public final static double kIntakeSpeed = -0.6;
+    public final static double kIntakeSpeed = -0.55;
+    public final static double kSpinCylinderSpeed = -0.3;   // voltage
+    public final static double kSpinDelay = 1;              // second
+    public final static double kSpinDurration = 0.3;       // second
 
     // Shooter
-    public final static double kShootTrigger = -0.2;
+    public final static double kShootTrigger = 0.5;
     public final static double kSusanSpeed = 0.3;
+
+    public final static double kManualShootFireSpeed = -0.8;
 
     // Elevator
     public final static double kElevatorSpeed = 1; 
+
 
 
     public Constants() {

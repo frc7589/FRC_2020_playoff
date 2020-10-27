@@ -28,7 +28,9 @@ public class ManualShoot extends CommandBase {
         if (m_shootTrigger.getAsBoolean()) {
             m_shooterSubsystem.trigger.set(Constants.kShootTrigger);
         }
-        else {m_shooterSubsystem.trigger.set(0);}
+        else {
+            m_shooterSubsystem.trigger.set(0);
+        }
 
         if (m_susanClock.getAsBoolean()) {
             m_shooterSubsystem.lazySusan.set(Constants.kSusanSpeed);
@@ -36,7 +38,12 @@ public class ManualShoot extends CommandBase {
         if (m_susanCounter.getAsBoolean()) {
             m_shooterSubsystem.lazySusan.set(-Constants.kSusanSpeed);
         }
-        System.out.println(m_shooterSubsystem.lazySusan.getSelectedSensorPosition());
-        System.out.println(m_shooterSubsystem.wheel.getSelectedSensorVelocity());
+
+        if (m_shootFire.getAsBoolean()) {
+            m_shooterSubsystem.wheel.set(Constants.kManualShootFireSpeed);
+        }
+        else {
+            m_shooterSubsystem.wheel.set(0);
+        }
     }
 }
