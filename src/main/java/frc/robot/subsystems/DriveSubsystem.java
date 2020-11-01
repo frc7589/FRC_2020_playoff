@@ -16,7 +16,7 @@ public class DriveSubsystem extends SubsystemBase {
   private WPI_VictorSPX leftF = new WPI_VictorSPX(Constants.getCAN("drive_lf"));
   private WPI_TalonSRX leftB = new WPI_TalonSRX(Constants.getCAN("drive_lb"));
   private WPI_VictorSPX rightF = new WPI_VictorSPX(Constants.getCAN("drive_rf"));
-  private WPI_VictorSPX rightB = new WPI_VictorSPX(Constants.getCAN("drive_rb"));
+  private WPI_TalonSRX rightB = new WPI_TalonSRX(Constants.getCAN("drive_rb"));
   private SpeedControllerGroup leftSide = new SpeedControllerGroup(leftF, leftB);
   private SpeedControllerGroup rightSide = new SpeedControllerGroup(rightF, rightB);
   public DifferentialDrive drive = new DifferentialDrive(rightSide, leftSide);
@@ -26,7 +26,7 @@ public class DriveSubsystem extends SubsystemBase {
    * drive and arcade drive are available now. No PID supported.
    */
   public DriveSubsystem() {
-    leftSide.setInverted(true);
-    rightSide.setInverted(true);
+    leftSide.setInverted(false);
+    rightSide.setInverted(false);
   }
 }

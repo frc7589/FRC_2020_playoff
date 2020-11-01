@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Intaking extends CommandBase {
     private final IntakeSubsystem m_intakeSubsystem;
@@ -44,6 +45,11 @@ public class Intaking extends CommandBase {
 
     @Override
     public void execute() {
+        double intakeSpeed = SmartDashboard.getNumber("Intake Speed", Constants.kIntakeSpeed);
+        double spinSpeed = SmartDashboard.getNumber("Spin Speed", Constants.kSpinCylinderSpeed);
+        double spinDelay = SmartDashboard.getNumber("Spin Delay", Constants.kSpinDelay);
+        double spinDur = SmartDashboard.getNumber("Spin Durration", Constants.kSpinDurration);
+
         cur_time = System.currentTimeMillis();
         deltaTime = cur_time - prev_time;
 
@@ -59,7 +65,7 @@ public class Intaking extends CommandBase {
         
         if (m_toggleIntake.getAsBoolean()) intake_enabled = !intake_enabled;
         if (intake_enabled) {
-            m_intakeSubsystem.intaker.set(Constants.kIntakeSpeed);
+            m_intakeSubsystem.intaker.set(intakeSpeed);
         }
         else {
             m_intakeSubsystem.intaker.set(0);
@@ -68,17 +74,17 @@ public class Intaking extends CommandBase {
         if (m_spin.getAsBoolean()) {
             if (spinning) {
                 spinTimer += deltaTime/1000;
-                m_intakeSubsystem.spin.set(Constants.kSpinCylinderSpeed);
+                m_intakeSubsystem.spin.set(spinSpeed);
             }
             else {
                 delayTimer += deltaTime/1000;
                 m_intakeSubsystem.spin.set(0);
             }
-            if (spinTimer > Constants.kSpinDurration) {
+            if (spinTimer > spinDur) {
                 spinning = false;
                 spinTimer = 0;
             }
-            else if (delayTimer > Constants.kSpinDelay) {
+            else if (delayTimer > spinDelay) {
                 spinning = true;
                 delayTimer = 0;
             }

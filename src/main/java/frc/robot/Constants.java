@@ -2,6 +2,8 @@ package frc.robot;
 
 import java.util.HashMap;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public final class Constants {
 
     private static HashMap<String, Integer> mapPWM; // the PWM port map
@@ -10,29 +12,15 @@ public final class Constants {
     private static HashMap<String, Integer> mapDIO; // the DIO port map
     private static HashMap<String, Integer> mapCTRL; // the controller port map
 
-    /* XBOX BUTTON MAP KEY:
-    1 = A
-    2 = B
-    3 = X
-    4 = Y
-    5 = left bumper
-    6 = right bumper
-    7 = back
-    8 = start
-    9 = left stick click
-    10 = right stick click
-    */
-
     // Subsystems constants
     // Base drive
     public final static double kDriveSpeed = 0.7;
-    public final static double kTurnSpeed = 0.6;
 
     // Intake
     public final static double kIntakeSpeed = -0.55;
-    public final static double kSpinCylinderSpeed = -0.3;   // voltage
-    public final static double kSpinDelay = 1;              // second
-    public final static double kSpinDurration = 0.3;       // second
+    public final static double kSpinCylinderSpeed = -0.35;   // voltage
+    public final static double kSpinDelay = .25;              // second
+    public final static double kSpinDurration = 0.25;       // second
 
     // Shooter
     public final static double kShootTrigger = 0.5;
@@ -41,7 +29,8 @@ public final class Constants {
     public final static double kManualShootFireSpeed = -0.8;
 
     // Elevator
-    public final static double kElevatorSpeed = 1; 
+    public final static double kElevateSpeed = 0.8; 
+    public final static double kLiftSpeed = -0.8; 
 
 
 
@@ -88,6 +77,25 @@ public final class Constants {
         // map for DIO
         setDIO("susan left", 0);
         setDIO("susan right", 1);
+
+        SetSMD_DefaultValue();
+    }
+
+    private void SetSMD_DefaultValue() {
+        SmartDashboard.putNumber("Drive Speed", kDriveSpeed);
+
+        SmartDashboard.putNumber("Intake Speed", kIntakeSpeed);
+        SmartDashboard.putNumber("Spin Speed", kSpinCylinderSpeed);
+        SmartDashboard.putNumber("Spin Delay", kSpinDelay);
+        SmartDashboard.putNumber("Spin Durration", kSpinDurration);
+
+        SmartDashboard.putNumber("Shoot Trigger Speed", kShootTrigger);
+        SmartDashboard.putNumber("Susan Speed", kSusanSpeed);
+
+        SmartDashboard.putNumber("Manual Shoot Speed", kManualShootFireSpeed);
+
+        SmartDashboard.putNumber("Elevator Speed", kElevateSpeed);
+        SmartDashboard.putNumber("Lifters Speed", kLiftSpeed);
     }
 
     /**

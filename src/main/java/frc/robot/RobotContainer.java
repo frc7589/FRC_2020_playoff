@@ -11,7 +11,9 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -22,11 +24,13 @@ import frc.robot.subsystems.*;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+
   // The robot's subsystems and commands are defined here...
   private final DriveSubsystem drive = new DriveSubsystem();
   private final IntakeSubsystem intake = new IntakeSubsystem();
   private final ShooterSubsystem shooter = new ShooterSubsystem();
-  private final Compressor m_compressor = new Compressor(Constants.getCAN("PCM"));
+  private final ElevatorSubsystem elevator = new ElevatorSubsystem();
+  private final Compressor compressor = new Compressor(Constants.getCAN("PCM"));
 
   private final XboxController driver1 = new XboxController(Constants.getCTRL("player 1"));
   private final XboxController driver2 = new XboxController(Constants.getCTRL("player 2"));
@@ -38,8 +42,8 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    m_compressor.start();
-    m_compressor.setClosedLoopControl(true);
+    compressor.start();
+    compressor.setClosedLoopControl(true);
 
     drive.setDefaultCommand(
       new BaseTankDrive(
@@ -49,16 +53,24 @@ public class RobotContainer {
     shooter.setDefaultCommand(
       new ManualShoot(
         shooter, 
-        () -> driver1.getBButton(), 
-        () -> driver1.getTriggerAxis(Hand.kRight) > 0.8,
-        () -> driver1.getBumper(Hand.kLeft),
-        () -> driver1.getBumper(Hand.kRight)));
+        () -> driver2.getBButton(), 
+        () -> driver2.getTriggerAxis(Hand.kRight) > 0.8,
+        () -> driver2.getBumper(Hand.kLeft),
+        () -> driver2.getBumper(Hand.kRight),
+        () -> driver2.getTriggerAxis(Hand.kLeft) > 0.8));
     intake.setDefaultCommand(
       new Intaking(
         intake, 
-        () -> driver1.getYButtonPressed(),
-        () -> driver1.getXButtonPressed(),
-        () -> driver1.getAButton()));
+        () -> driver2.getYButtonPressed(),
+        () -> driver2.getXButtonPressed(),
+        () -> driver2.getAButton()));
+    elevator.setDefaultCommand(
+      new Elevate(
+        elevator, 
+        () -> driver1.getTriggerAxis(Hand.kLeft), 
+        () -> driver1.getTriggerAxis(Hand.kRight),
+        () -> driver1.getPOV() == 0,
+        () -> driver1.getPOV() == 180));
   }
 
   /**
@@ -68,7 +80,8 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-
+    new JoystickButton(driver2, Button.kBack.value)
+      .whenPressed(new AutoShoot(shooter));
   }
 
 

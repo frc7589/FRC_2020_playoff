@@ -1,5 +1,8 @@
 package frc.robot.subsystems;
 
+import java.util.List;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
@@ -12,17 +15,26 @@ import frc.robot.Constants;
 public class ShooterSubsystem extends SubsystemBase {
   NetworkTable table = NetworkTableInstance.getDefault().getTable("myTable");
 
-  public WPI_VictorSPX lazySusan = new WPI_VictorSPX(Constants.getCAN("lazy susan"));
+  public WPI_TalonSRX lazySusan = new WPI_TalonSRX(Constants.getCAN("lazy susan"));
   public WPI_VictorSPX trigger = new WPI_VictorSPX(Constants.getCAN("shoot trigger"));
   public WPI_TalonSRX wheel = new WPI_TalonSRX(Constants.getCAN("shoot fire"));
 
   public DigitalInput susanLeft = new DigitalInput(Constants.getDIO("susan left"));
   public DigitalInput susanRight = new DigitalInput(Constants.getDIO("susan right"));
 
+  private double[] SusanPID_Values = {0.001, 0.05, 0, 0};
+
   /**
    * Create a shooter subsystem.
    */
   public ShooterSubsystem() {
-
+    lazySusan.setInverted(true);
+    
+    lazySusan.setSelectedSensorPosition(0);
+    lazySusan.config_kF(0, SusanPID_Values[0]);
+    lazySusan.config_kP(0, SusanPID_Values[1]);
+    lazySusan.config_kI(0, SusanPID_Values[2]);
+    lazySusan.config_kD(0, SusanPID_Values[3]);
+    
   }
 }
