@@ -36,7 +36,7 @@ public class Elevate extends CommandBase {
             m_elevatorSubsystem.elevator.set(elevate_speed);
         }
         else if (m_elevatorDown.getAsBoolean()) {
-            m_elevatorSubsystem.elevator.set(-elevate_speed);
+            m_elevatorSubsystem.elevator.set(-elevate_speed/3);
         }
         else {
             m_elevatorSubsystem.elevator.set(0);

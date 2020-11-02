@@ -3,7 +3,6 @@ package frc.robot.commands;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -12,6 +11,8 @@ import frc.robot.subsystems.ShooterSubsystem;
 
 public class AutoShoot extends CommandBase {
     private final ShooterSubsystem m_shooterSubsystem;
+
+    boolean toggle = false;
 
     boolean facing_center = false;
 
@@ -30,35 +31,53 @@ public class AutoShoot extends CommandBase {
 
     @Override
     public void initialize() {
-        
+        toggle = !toggle;
     }
     
 
     @Override
     public void execute() {
-        centerX = RPiTable.getEntry("center X").getDouble(0)-320;
-        centerY = RPiTable.getEntry("center Y").getDouble(0)-240;
-        area = RPiTable.getEntry("area").getDouble(0);
-
-        if (area > 100) {
+        if (toggle) {
+            centerX = RPiTable.getEntry("center X").getDouble(0)-320;
+            centerY = RPiTable.getEntry("center Y").getDouble(0)-240;
+            area = RPiTable.getEntry("area").getDouble(0);
             double pos = m_shooterSubsystem.lazySusan.getSelectedSensorPosition();
-            double move = 0;
-            if (centerX >= 30) move = Math.log10(centerX/5)/5;
-            else if (centerX <= -30) move = -Math.log10(-centerX)/7;
-            
-            if (pos > -300000 && pos < 350000) {
-                m_shooterSubsystem.lazySusan.set(move);
+            boolean inPosition = false;
+    
+            if (area > 100) {
+                double move = 0;
+                if (centerX >= 20) move = Math.log10(centerX/5)/7+0.1;
+                else if (centerX <= -20) move = -Math.log10(-centerX/5)/7-0.1;
+                else move = centerX/360;
+                
+                if (pos > -300000 && pos < 300000) {
+                    m_shooterSubsystem.lazySusan.set(move);
+                }
+                else if (pos <= -300000) {
+                    m_shooterSubsystem.lazySusan.set(0.5);
+                }
+                else if (pos >= 300000) {
+                    m_shooterSubsystem.lazySusan.set(-0.5);
+                }
             }
-            else if (pos <= -300000) {
-                m_shooterSubsystem.lazySusan.set(0.5);
+            else {
+                m_shooterSubsystem.lazySusan.set(0);
             }
-            else if (pos >= 350000) {
-                m_shooterSubsystem.lazySusan.set(-0.5);
+    
+            inPosition = (Math.abs(centerX) < 20);
+    
+            if (inPosition) {
+                double speed = SmartDashboard.getNumber("Test Auto Shoot Speed", Constants.kTestAutoShootSpeed);
+                m_shooterSubsystem.wheel.set(ControlMode.Velocity, speed);
+                System.out.println(m_shooterSubsystem.wheel.getSelectedSensorVelocity());
             }
+            else m_shooterSubsystem.wheel.set(0);
         }
-        else {
-            m_shooterSubsystem.lazySusan.set(0);
-        }
+    }
+
+    @Override
+    public boolean isFinished() {
+        return !toggle;
     }
 }
 

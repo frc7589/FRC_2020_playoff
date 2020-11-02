@@ -23,14 +23,16 @@ public final class Constants {
     public final static double kSpinDurration = 0.25;       // second
 
     // Shooter
-    public final static double kShootTrigger = 0.5;
+    public final static double kShootTrigger = 0.7;
     public final static double kSusanSpeed = 0.3;
 
     public final static double kManualShootFireSpeed = -0.8;
+    public final static double kTestAutoShootSpeed = -60;
 
     // Elevator
     public final static double kElevateSpeed = 0.8; 
     public final static double kLiftSpeed = -0.8; 
+
 
 
 
@@ -93,6 +95,7 @@ public final class Constants {
         SmartDashboard.putNumber("Susan Speed", kSusanSpeed);
 
         SmartDashboard.putNumber("Manual Shoot Speed", kManualShootFireSpeed);
+        SmartDashboard.putNumber("Test Auto Shoot Speed", kTestAutoShootSpeed);
 
         SmartDashboard.putNumber("Elevator Speed", kElevateSpeed);
         SmartDashboard.putNumber("Lifters Speed", kLiftSpeed);

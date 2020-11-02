@@ -48,8 +48,8 @@ public class RobotContainer {
     drive.setDefaultCommand(
       new BaseTankDrive(
         drive,
-        () -> driver1.getY(Hand.kLeft) * Constants.kDriveSpeed,
-        () -> driver1.getY(Hand.kRight) * Constants.kDriveSpeed));
+        () -> driver1.getY(Hand.kLeft),
+        () -> driver1.getY(Hand.kRight)));
     shooter.setDefaultCommand(
       new ManualShoot(
         shooter, 
@@ -80,7 +80,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(driver2, Button.kBack.value)
+    new JoystickButton(driver2, Button.kStart.value)
       .whenPressed(new AutoShoot(shooter));
   }
 

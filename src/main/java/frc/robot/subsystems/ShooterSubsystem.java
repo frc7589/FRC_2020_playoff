@@ -23,6 +23,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public DigitalInput susanRight = new DigitalInput(Constants.getDIO("susan right"));
 
   private double[] SusanPID_Values = {0.001, 0.05, 0, 0};
+  private double[] WheelPID_Values = {1, 0.1, 0, 0.1};
 
   /**
    * Create a shooter subsystem.
@@ -36,5 +37,11 @@ public class ShooterSubsystem extends SubsystemBase {
     lazySusan.config_kI(0, SusanPID_Values[2]);
     lazySusan.config_kD(0, SusanPID_Values[3]);
     
+    wheel.setSelectedSensorPosition(0);
+    
+    wheel.config_kF(0, WheelPID_Values[0]);
+    wheel.config_kP(0, WheelPID_Values[1]);
+    wheel.config_kI(0, WheelPID_Values[2]);
+    wheel.config_kD(0, WheelPID_Values[3]);
   }
 }
