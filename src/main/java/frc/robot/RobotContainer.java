@@ -26,14 +26,53 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
-  private final DriveSubsystem drive = new DriveSubsystem();
-  private final IntakeSubsystem intake = new IntakeSubsystem();
-  private final ShooterSubsystem shooter = new ShooterSubsystem();
-  private final ElevatorSubsystem elevator = new ElevatorSubsystem();
-  private final Compressor compressor = new Compressor(Constants.getCAN("PCM"));
+  public final DriveSubsystem drive = new DriveSubsystem();
+  public final IntakeSubsystem intake = new IntakeSubsystem();
+  public final ShooterSubsystem shooter = new ShooterSubsystem();
+  public final ElevatorSubsystem elevator = new ElevatorSubsystem();
+  public final Compressor compressor = new Compressor(Constants.getCAN("PCM"));
 
   private final XboxController driver1 = new XboxController(Constants.getCTRL("player 1"));
   private final XboxController driver2 = new XboxController(Constants.getCTRL("player 2"));
+
+  private BaseTankDrive baseTankDrive = new BaseTankDrive(
+    drive,
+    () -> driver1.getY(Hand.kLeft),
+    () -> driver1.getY(Hand.kRight)
+  );
+
+  private ManualShoot manualShoot = new ManualShoot(
+    shooter, 
+    () -> driver2.getBButton(), 
+    () -> driver2.getTriggerAxis(Hand.kRight) > 0.8,
+    () -> driver2.getBumper(Hand.kLeft),
+    () -> driver2.getBumper(Hand.kRight),
+    () -> driver2.getTriggerAxis(Hand.kLeft) > 0.8
+  );
+
+  private Intaking intaking = new Intaking(
+    intake, 
+    () -> driver2.getYButtonPressed(),
+    () -> driver2.getXButtonPressed(),
+    () -> driver2.getAButton()
+  );
+
+  private Elevate elevate = new Elevate(
+    elevator, 
+    () -> driver1.getTriggerAxis(Hand.kLeft), 
+    () -> driver1.getTriggerAxis(Hand.kRight),
+    () -> driver1.getPOV() == 0,
+    () -> driver1.getPOV() == 180
+    );
+
+  private ElevatorAdjust testCommand = new ElevatorAdjust(
+    elevator,
+    drive,
+    () -> driver1.getY(Hand.kLeft),
+    () -> driver1.getY(Hand.kRight),
+    () -> driver1.getTriggerAxis(Hand.kLeft),
+    () -> driver1.getTriggerAxis(Hand.kRight)
+  );
 
 
   /**
@@ -42,35 +81,6 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    compressor.start();
-    compressor.setClosedLoopControl(true);
-
-    drive.setDefaultCommand(
-      new BaseTankDrive(
-        drive,
-        () -> driver1.getY(Hand.kLeft),
-        () -> driver1.getY(Hand.kRight)));
-    shooter.setDefaultCommand(
-      new ManualShoot(
-        shooter, 
-        () -> driver2.getBButton(), 
-        () -> driver2.getTriggerAxis(Hand.kRight) > 0.8,
-        () -> driver2.getBumper(Hand.kLeft),
-        () -> driver2.getBumper(Hand.kRight),
-        () -> driver2.getTriggerAxis(Hand.kLeft) > 0.8));
-    intake.setDefaultCommand(
-      new Intaking(
-        intake, 
-        () -> driver2.getYButtonPressed(),
-        () -> driver2.getXButtonPressed(),
-        () -> driver2.getAButton()));
-    elevator.setDefaultCommand(
-      new Elevate(
-        elevator, 
-        () -> driver1.getTriggerAxis(Hand.kLeft), 
-        () -> driver1.getTriggerAxis(Hand.kRight),
-        () -> driver1.getPOV() == 0,
-        () -> driver1.getPOV() == 180));
   }
 
   /**
@@ -93,5 +103,12 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return null;
+  }
+  public Command getTestCommand() {
+    return testCommand;
+  }
+  public Command[] getTeleopCommands() {
+    Command[] commands = {baseTankDrive, elevate, manualShoot, intaking};
+    return commands;
   }
 }

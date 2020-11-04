@@ -59,5 +59,6 @@ public class ManualShoot extends CommandBase {
             m_shooterSubsystem.wheel.set(-Constants.kManualShootFireSpeed/2);
             m_shooterSubsystem.trigger.set(-Constants.kShootTrigger/2);
         }
+        System.out.println(m_shooterSubsystem.wheel.getSelectedSensorVelocity());
     }
 }

@@ -18,7 +18,9 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
+  private Command[] m_teleopCommands;
   private Command m_autonomousCommand;
+  private Command m_testCommand;
 
   private static RobotContainer m_robotContainer;
   private static Constants m_constants;
@@ -73,6 +75,9 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+    
+    m_robotContainer.compressor.start();
+    m_robotContainer.compressor.setClosedLoopControl(true);
   }
 
   /**
@@ -91,6 +96,14 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    m_teleopCommands = m_robotContainer.getTeleopCommands();
+
+    for(int i = 0; i < m_teleopCommands.length; i++) {
+      m_teleopCommands[i].schedule();
+    }
+    
+    m_robotContainer.compressor.start();
+    m_robotContainer.compressor.setClosedLoopControl(true);
   }
 
   /**
@@ -103,7 +116,14 @@ public class Robot extends TimedRobot {
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
-    CommandScheduler.getInstance().cancelAll();
+    m_testCommand = m_robotContainer.getTestCommand();
+
+    if (m_testCommand != null) {
+      m_testCommand.schedule();
+    }
+    
+    m_robotContainer.compressor.start();
+    m_robotContainer.compressor.setClosedLoopControl(true);
   }
 
   /**
