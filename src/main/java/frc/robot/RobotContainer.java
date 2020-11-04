@@ -30,6 +30,7 @@ public class RobotContainer {
   public final IntakeSubsystem intake = new IntakeSubsystem();
   public final ShooterSubsystem shooter = new ShooterSubsystem();
   public final ElevatorSubsystem elevator = new ElevatorSubsystem();
+  public final SpinnerSubsystem spinner = new SpinnerSubsystem();
   public final Compressor compressor = new Compressor(Constants.getCAN("PCM"));
 
   private final XboxController driver1 = new XboxController(Constants.getCTRL("player 1"));
@@ -63,6 +64,13 @@ public class RobotContainer {
     () -> driver1.getTriggerAxis(Hand.kRight),
     () -> driver1.getPOV() == 0,
     () -> driver1.getPOV() == 180
+    );
+
+  private SpinPanel spinPanel = new SpinPanel(
+    spinner, 
+    () -> driver2.getPOV() == 0, 
+    () -> driver2.getPOV() == 90, 
+    () -> driver2.getPOV() == 270
     );
 
   private ElevatorAdjust testCommand = new ElevatorAdjust(
@@ -108,7 +116,7 @@ public class RobotContainer {
     return testCommand;
   }
   public Command[] getTeleopCommands() {
-    Command[] commands = {baseTankDrive, elevate, manualShoot, intaking};
+    Command[] commands = {baseTankDrive, elevate, manualShoot, intaking, spinPanel};
     return commands;
   }
 }

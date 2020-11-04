@@ -2,6 +2,8 @@ package frc.robot.commands;
 
 import java.util.function.BooleanSupplier;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -36,6 +38,7 @@ public class ManualShoot extends CommandBase {
         double susanSpeed = SmartDashboard.getNumber("Susan Speed", Constants.kSusanSpeed);
         double shootTrigger = SmartDashboard.getNumber("Shoot Trigger Speed", Constants.kShootTrigger);
         double manualShootSpeed = SmartDashboard.getNumber("Manual Shoot Speed", Constants.kManualShootFireSpeed);
+        double autoShootSpeed = SmartDashboard.getNumber("Auto Shoot Speed", Constants.kAutoShootSpeed);
 
         if (m_shootTrigger.getAsBoolean()) {
             m_shooterSubsystem.trigger.set(shootTrigger);
@@ -49,7 +52,8 @@ public class ManualShoot extends CommandBase {
         else {m_shooterSubsystem.lazySusan.set(0); }
 
         if (m_shootFire.getAsBoolean()) {
-            m_shooterSubsystem.wheel.set(manualShootSpeed);
+            //m_shooterSubsystem.wheel.set(manualShootSpeed);
+            m_shooterSubsystem.wheel.set(ControlMode.Velocity, autoShootSpeed);
         }
         else {
             m_shooterSubsystem.wheel.set(0);

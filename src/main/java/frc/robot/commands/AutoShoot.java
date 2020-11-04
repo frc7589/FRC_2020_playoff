@@ -13,11 +13,11 @@ public class AutoShoot extends CommandBase {
     private final ShooterSubsystem m_shooterSubsystem;
 
     boolean toggle = false;
-
-    boolean facing_center = false;
-
     NetworkTableInstance inst;
     NetworkTable RPiTable;
+
+    boolean inPosition = false;
+
     double centerX;
     double centerY;
     double area;
@@ -42,7 +42,7 @@ public class AutoShoot extends CommandBase {
             centerY = RPiTable.getEntry("center Y").getDouble(0)-240;
             area = RPiTable.getEntry("area").getDouble(0);
             double pos = m_shooterSubsystem.lazySusan.getSelectedSensorPosition();
-            boolean inPosition = false;
+            
     
             if (area > 100) {
                 double move = 0;
@@ -65,19 +65,13 @@ public class AutoShoot extends CommandBase {
             }
     
             inPosition = (Math.abs(centerX) < 20);
-    
-            if (inPosition) {
-                double speed = SmartDashboard.getNumber("Test Auto Shoot Speed", Constants.kTestAutoShootSpeed);
-                m_shooterSubsystem.wheel.set(ControlMode.Velocity, speed);
-                System.out.println(m_shooterSubsystem.wheel.getSelectedSensorVelocity());
-            }
-            else m_shooterSubsystem.wheel.set(0);
+            System.out.println(inPosition);
         }
     }
 
     @Override
     public boolean isFinished() {
-        return !toggle;
+        return inPosition;
     }
 }
 

@@ -18,20 +18,24 @@ public final class Constants {
 
     // Intake
     public final static double kIntakeSpeed = -0.55;
-    public final static double kSpinCylinderSpeed = -0.35;   // voltage
-    public final static double kSpinDelay = .25;              // second
-    public final static double kSpinDurration = 0.25;       // second
+    public final static double kSpinCylinderSpeed = -0.426;   // voltage
+    public final static double kSpinDelay = .67;              // second
+    public final static double kSpinDurration = 0.23;       // second
 
     // Shooter
     public final static double kShootTrigger = 0.7;
     public final static double kSusanSpeed = 0.3;
 
-    public final static double kManualShootFireSpeed = -0.8;
-    public final static double kTestAutoShootSpeed = -60;
+    public final static double kManualShootFireSpeed = -0.4;
+    public final static int kAutoShootSpeed = -60;
 
     // Elevator
     public final static double kElevateSpeed = 0.8; 
     public final static double kLiftSpeed = -0.8; 
+
+    // PanelSpinner
+    public final static double kArmSpeed = 0.3;
+    public final static double kSpinSpeed = 0.3;
 
 
 
@@ -95,10 +99,13 @@ public final class Constants {
         SmartDashboard.putNumber("Susan Speed", kSusanSpeed);
 
         SmartDashboard.putNumber("Manual Shoot Speed", kManualShootFireSpeed);
-        SmartDashboard.putNumber("Test Auto Shoot Speed", kTestAutoShootSpeed);
+        SmartDashboard.putNumber("Auto Shoot Speed", kAutoShootSpeed);
 
         SmartDashboard.putNumber("Elevator Speed", kElevateSpeed);
         SmartDashboard.putNumber("Lifters Speed", kLiftSpeed);
+
+        SmartDashboard.putNumber("Arm Speed", kArmSpeed);
+        SmartDashboard.putNumber("Spin Speed", kSpinSpeed);
     }
 
     /**
