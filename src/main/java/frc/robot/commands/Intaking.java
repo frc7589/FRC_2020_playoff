@@ -5,6 +5,7 @@ import java.util.function.BooleanSupplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.IntakeSubsystem;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -13,6 +14,7 @@ public class Intaking extends CommandBase {
     private final BooleanSupplier m_toggleIntake;
     private final BooleanSupplier m_toggleArm;
     private final BooleanSupplier m_spin;
+    private final BooleanSupplier m_spinReversed;
     private boolean arm_out = false;
     private boolean intake_enabled = false;
     private boolean spinning = false;
@@ -25,11 +27,13 @@ public class Intaking extends CommandBase {
 
 
     public Intaking(IntakeSubsystem intakeSubsystem, BooleanSupplier toggleIntake,
-                    BooleanSupplier toggleArm, BooleanSupplier spinPressed) {
+                    BooleanSupplier toggleArm, BooleanSupplier spin,
+                    BooleanSupplier spinReversed) {
         m_intakeSubsystem = intakeSubsystem;
         m_toggleIntake = toggleIntake;
         m_toggleArm = toggleArm;
-        m_spin = spinPressed;
+        m_spin = spin;
+        m_spinReversed = spinReversed;
         
         addRequirements(m_intakeSubsystem);
     }
@@ -45,8 +49,9 @@ public class Intaking extends CommandBase {
 
     @Override
     public void execute() {
+        double voltage = RobotController.getBatteryVoltage();
         double intakeSpeed = SmartDashboard.getNumber("Intake Speed", Constants.kIntakeSpeed);
-        double spinSpeed = SmartDashboard.getNumber("Spin Cylinder Speed", Constants.kSpinCylinderSpeed);
+        double spinSpeed = SmartDashboard.getNumber("Spin Cylinder Voltage", Constants.kSpinCylinderVoltage)/voltage;
         double spinDelay = SmartDashboard.getNumber("Spin Delay", Constants.kSpinDelay);
         double spinDur = SmartDashboard.getNumber("Spin Durration", Constants.kSpinDurration);
 
@@ -88,6 +93,9 @@ public class Intaking extends CommandBase {
                 spinning = true;
                 delayTimer = 0;
             }
+        }
+        else if (m_spinReversed.getAsBoolean()){
+            m_intakeSubsystem.spin.set(-spinSpeed/2);
         }
         else {
             m_intakeSubsystem.spin.set(0);

@@ -33,8 +33,8 @@ public class RobotContainer {
   public final SpinnerSubsystem spinner = new SpinnerSubsystem();
   public final Compressor compressor = new Compressor(Constants.getCAN("PCM"));
 
-  private final XboxController driver1 = new XboxController(Constants.getCTRL("player 1"));
-  private final XboxController driver2 = new XboxController(Constants.getCTRL("player 2"));
+  private final XboxController driver1 = new XboxController(Constants.getCTRL("player 1")); // x0
+  private final XboxController driver2 = new XboxController(Constants.getCTRL("player 2")); // x1
 
   private BaseTankDrive baseTankDrive = new BaseTankDrive(
     drive,
@@ -57,7 +57,8 @@ public class RobotContainer {
     intake, 
     () -> driver1.getYButtonPressed(),
     () -> driver1.getXButtonPressed(),
-    () -> driver1.getAButton()
+    () -> driver1.getAButton(),
+    () -> driver1.getBackButton()
   );
 
   private Elevate elevate = new Elevate(
@@ -103,7 +104,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(driver2, Button.kStart.value)
+    new JoystickButton(driver1, Button.kStart.value)
       .whenPressed(autoShoot);
   }
 

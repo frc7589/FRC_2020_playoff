@@ -75,8 +75,6 @@ public class Robot extends TimedRobot {
       m_autonomousCommands[i].schedule();
     }
     
-    m_robotContainer.compressor.start();
-    m_robotContainer.compressor.setClosedLoopControl(true);
   }
 
   /**
@@ -92,14 +90,13 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    m_constants.SetSMD_DefaultValue();
     m_teleopCommands = m_robotContainer.getTeleopCommands();
 
     for(int i = 0; i < m_teleopCommands.length; i++) {
       m_teleopCommands[i].schedule();
     }
     
-    m_robotContainer.compressor.start();
-    m_robotContainer.compressor.setClosedLoopControl(true);
   }
 
   /**
@@ -121,8 +118,6 @@ public class Robot extends TimedRobot {
       m_testCommands[i].schedule();
     }
     
-    m_robotContainer.compressor.start();
-    m_robotContainer.compressor.setClosedLoopControl(true);
   }
 
   /**

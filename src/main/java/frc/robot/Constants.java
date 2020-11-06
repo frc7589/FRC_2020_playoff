@@ -18,16 +18,16 @@ public final class Constants {
 
     // Intake
     public final static double kIntakeSpeed = -0.55;
-    public final static double kSpinCylinderSpeed = -0.426;   // voltage
+    public final static double kSpinCylinderVoltage = -5;   // voltage
     public final static double kSpinDelay = .67;              // second
     public final static double kSpinDurration = 0.23;       // second
 
     // Shooter
-    public final static double kShootTrigger = 0.7;
+    public final static double kShootTrigger = 0.5;
     public final static double kSusanSpeed = 0.3;
 
-    public final static double kManualShootFireSpeed = -0.4;
-    public final static int kAutoShootSpeed = -60;
+    public final static double kManualShootVoltage = -8;
+    public final static int kAutoShootSpeed = -1000;
 
     // Elevator
     public final static double kElevateSpeed = 0.8; 
@@ -87,18 +87,18 @@ public final class Constants {
         SetSMD_DefaultValue();
     }
 
-    private void SetSMD_DefaultValue() {
+    public void SetSMD_DefaultValue() {
         SmartDashboard.putNumber("Drive Speed", kDriveSpeed);
 
         SmartDashboard.putNumber("Intake Speed", kIntakeSpeed);
-        SmartDashboard.putNumber("Spin Cylinder Speed", kSpinCylinderSpeed);
+        SmartDashboard.putNumber("Spin Cylinder Voltage", kSpinCylinderVoltage);
         SmartDashboard.putNumber("Spin Delay", kSpinDelay);
         SmartDashboard.putNumber("Spin Durration", kSpinDurration);
 
         SmartDashboard.putNumber("Shoot Trigger Speed", kShootTrigger);
         SmartDashboard.putNumber("Susan Speed", kSusanSpeed);
 
-        SmartDashboard.putNumber("Manual Shoot Speed", kManualShootFireSpeed);
+        SmartDashboard.putNumber("Manual Shoot Voltage", kManualShootVoltage);
         SmartDashboard.putNumber("Auto Shoot Speed", kAutoShootSpeed);
 
         SmartDashboard.putNumber("Elevator Speed", kElevateSpeed);

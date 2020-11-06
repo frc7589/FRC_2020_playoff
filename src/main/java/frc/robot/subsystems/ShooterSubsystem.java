@@ -22,8 +22,9 @@ public class ShooterSubsystem extends SubsystemBase {
   public DigitalInput susanLeft = new DigitalInput(Constants.getDIO("susan left"));
   public DigitalInput susanRight = new DigitalInput(Constants.getDIO("susan right"));
 
+  // Not being used
   private double[] SusanPID_Values = {0.001, 0.05, 0, 0};
-  private double[] WheelPID_Values = {1.5, 0.2, 0., 0.1};
+  private double[] WheelPID_Values = {2, 0.21, 0., 0.2};
 
   /**
    * Create a shooter subsystem.

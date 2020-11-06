@@ -24,9 +24,10 @@ public class AutoDrive extends CommandBase {
     @Override
     public void execute() {
         double driveSpeed = SmartDashboard.getNumber("Drive Speed", Constants.kDriveSpeed);
-        m_driveSubsystem.drive.tankDrive(-driveSpeed, -driveSpeed);
-        if (System.currentTimeMillis() - startTime > 1000) {
-            m_driveSubsystem.drive.tankDrive(0, 0);
+        m_driveSubsystem.drive.tankDrive(-driveSpeed*2/3, -driveSpeed*2/3);
+        if (System.currentTimeMillis() - startTime > 1400) {
+            m_driveSubsystem.leftSide.set(0);
+            m_driveSubsystem.rightSide.set(0);
             done = true;
         } 
     }
