@@ -52,8 +52,8 @@ public class ManualShoot extends CommandBase {
         else {m_shooterSubsystem.lazySusan.set(0); }
 
         if (m_shootFire.getAsBoolean()) {
-            //m_shooterSubsystem.wheel.set(manualShootSpeed);
-            m_shooterSubsystem.wheel.set(ControlMode.Velocity, autoShootSpeed);
+            m_shooterSubsystem.wheel.set(manualShootSpeed);
+            //m_shooterSubsystem.wheel.set(ControlMode.Velocity, autoShootSpeed);
         }
         else {
             m_shooterSubsystem.wheel.set(0);
@@ -63,6 +63,6 @@ public class ManualShoot extends CommandBase {
             m_shooterSubsystem.wheel.set(-Constants.kManualShootFireSpeed/2);
             m_shooterSubsystem.trigger.set(-Constants.kShootTrigger/2);
         }
-        System.out.println(m_shooterSubsystem.wheel.getSelectedSensorVelocity());
+        //System.out.println(m_shooterSubsystem.wheel.getSelectedSensorVelocity());
     }
 }

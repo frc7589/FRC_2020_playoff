@@ -91,7 +91,7 @@ public final class Constants {
         SmartDashboard.putNumber("Drive Speed", kDriveSpeed);
 
         SmartDashboard.putNumber("Intake Speed", kIntakeSpeed);
-        SmartDashboard.putNumber("Spin Speed", kSpinCylinderSpeed);
+        SmartDashboard.putNumber("Spin Cylinder Speed", kSpinCylinderSpeed);
         SmartDashboard.putNumber("Spin Delay", kSpinDelay);
         SmartDashboard.putNumber("Spin Durration", kSpinDurration);
 

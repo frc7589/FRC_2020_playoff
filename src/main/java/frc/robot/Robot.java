@@ -19,8 +19,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
   private Command[] m_teleopCommands;
-  private Command m_autonomousCommand;
-  private Command m_testCommand;
+  private Command[] m_autonomousCommands;
+  private Command[] m_testCommands;
 
   private static RobotContainer m_robotContainer;
   private static Constants m_constants;
@@ -69,11 +69,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_autonomousCommands = m_robotContainer.getAutonomousCommands();
 
-    // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
+    for (int i = 0; i < m_autonomousCommands.length; i++) {
+      m_autonomousCommands[i].schedule();
     }
     
     m_robotContainer.compressor.start();
@@ -93,9 +92,6 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
-    }
     m_teleopCommands = m_robotContainer.getTeleopCommands();
 
     for(int i = 0; i < m_teleopCommands.length; i++) {
@@ -111,15 +107,18 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    if (m_robotContainer.getAimBot().isFinished()) {
+      m_teleopCommands[2].schedule();
+    }
   }
 
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
-    m_testCommand = m_robotContainer.getTestCommand();
+    m_testCommands = m_robotContainer.getTestCommands();
 
-    if (m_testCommand != null) {
-      m_testCommand.schedule();
+    for (int i = 0; i < m_testCommands.length; i++) {
+      m_testCommands[i].schedule();
     }
     
     m_robotContainer.compressor.start();

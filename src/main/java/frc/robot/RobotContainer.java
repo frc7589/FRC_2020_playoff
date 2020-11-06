@@ -38,39 +38,42 @@ public class RobotContainer {
 
   private BaseTankDrive baseTankDrive = new BaseTankDrive(
     drive,
-    () -> driver1.getY(Hand.kLeft),
-    () -> driver1.getY(Hand.kRight)
+    () -> driver2.getY(Hand.kLeft),
+    () -> driver2.getY(Hand.kRight)
   );
+
+  private AutoDrive autoDrive = new AutoDrive(drive);
 
   private ManualShoot manualShoot = new ManualShoot(
     shooter, 
-    () -> driver2.getBButton(), 
-    () -> driver2.getTriggerAxis(Hand.kRight) > 0.8,
-    () -> driver2.getBumper(Hand.kLeft),
-    () -> driver2.getBumper(Hand.kRight),
-    () -> driver2.getTriggerAxis(Hand.kLeft) > 0.8
+    () -> driver1.getBButton(), 
+    () -> driver1.getTriggerAxis(Hand.kRight) > 0.8,
+    () -> driver1.getBumper(Hand.kLeft),
+    () -> driver1.getBumper(Hand.kRight),
+    () -> driver1.getTriggerAxis(Hand.kLeft) > 0.8
   );
 
   private Intaking intaking = new Intaking(
     intake, 
-    () -> driver2.getYButtonPressed(),
-    () -> driver2.getXButtonPressed(),
-    () -> driver2.getAButton()
+    () -> driver1.getYButtonPressed(),
+    () -> driver1.getXButtonPressed(),
+    () -> driver1.getAButton()
   );
 
   private Elevate elevate = new Elevate(
     elevator, 
-    () -> driver1.getTriggerAxis(Hand.kLeft), 
-    () -> driver1.getTriggerAxis(Hand.kRight),
-    () -> driver1.getPOV() == 0,
-    () -> driver1.getPOV() == 180
+    () -> driver2.getTriggerAxis(Hand.kLeft) > 0.7,
+    () -> driver2.getTriggerAxis(Hand.kRight) > 0.7, 
+    () -> driver2.getAButton(),
+    () -> driver2.getPOV() == 0,
+    () -> driver2.getPOV() == 180
     );
 
   private SpinPanel spinPanel = new SpinPanel(
     spinner, 
-    () -> driver2.getPOV() == 0, 
-    () -> driver2.getPOV() == 90, 
-    () -> driver2.getPOV() == 270
+    () -> driver2.getYButton(), 
+    () -> driver2.getXButton(), 
+    () -> driver2.getBButton()
     );
 
   private ElevatorAdjust testCommand = new ElevatorAdjust(
@@ -81,6 +84,8 @@ public class RobotContainer {
     () -> driver1.getTriggerAxis(Hand.kLeft),
     () -> driver1.getTriggerAxis(Hand.kRight)
   );
+
+  private AutoShoot autoShoot = new AutoShoot(shooter);
 
 
   /**
@@ -99,7 +104,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     new JoystickButton(driver2, Button.kStart.value)
-      .whenPressed(new AutoShoot(shooter));
+      .whenPressed(autoShoot);
   }
 
 
@@ -108,15 +113,19 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return null;
+  public Command[] getAutonomousCommands() {
+    Command[] commands = {autoDrive};
+    return commands;
   }
-  public Command getTestCommand() {
-    return testCommand;
+  public Command[] getTestCommands() {
+    Command[] commands = {testCommand};
+    return commands;
   }
   public Command[] getTeleopCommands() {
     Command[] commands = {baseTankDrive, elevate, manualShoot, intaking, spinPanel};
     return commands;
+  }
+  public Command getAimBot() {
+    return autoShoot;
   }
 }

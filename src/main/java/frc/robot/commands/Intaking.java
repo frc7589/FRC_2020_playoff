@@ -46,7 +46,7 @@ public class Intaking extends CommandBase {
     @Override
     public void execute() {
         double intakeSpeed = SmartDashboard.getNumber("Intake Speed", Constants.kIntakeSpeed);
-        double spinSpeed = SmartDashboard.getNumber("Spin Speed", Constants.kSpinCylinderSpeed);
+        double spinSpeed = SmartDashboard.getNumber("Spin Cylinder Speed", Constants.kSpinCylinderSpeed);
         double spinDelay = SmartDashboard.getNumber("Spin Delay", Constants.kSpinDelay);
         double spinDur = SmartDashboard.getNumber("Spin Durration", Constants.kSpinDurration);
 

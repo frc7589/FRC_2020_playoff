@@ -15,5 +15,6 @@ public class ElevatorSubsystem extends SubsystemBase {
   public SpeedControllerGroup lifter = new SpeedControllerGroup(lifter_l, lifter_r);
 
   public ElevatorSubsystem() {
+    lifter_l.setInverted(true);
   }
 }

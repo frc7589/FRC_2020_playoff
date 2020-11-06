@@ -10,15 +10,18 @@ import frc.robot.subsystems.ElevatorSubsystem;
 
 public class Elevate extends CommandBase {
     private final ElevatorSubsystem m_elevatorSubsystem;
-    private final DoubleSupplier m_lift;
-    private final DoubleSupplier m_liftLoose;
+    private final BooleanSupplier m_lift_l;
+    private final BooleanSupplier m_lift_r;
+    private final BooleanSupplier m_liftLoose;
     private final BooleanSupplier m_elevatorUp;
     private final BooleanSupplier m_elevatorDown;
 
-    public Elevate(ElevatorSubsystem elevatorSubsystem, DoubleSupplier lift, DoubleSupplier liftLoose, 
+    public Elevate(ElevatorSubsystem elevatorSubsystem, BooleanSupplier lift_l, 
+                   BooleanSupplier lift_r, BooleanSupplier liftLoose,
                    BooleanSupplier elevatorUp, BooleanSupplier elevatorDown) {
         m_elevatorSubsystem = elevatorSubsystem;
-        m_lift = lift;
+        m_lift_l = lift_l;
+        m_lift_r = lift_r;
         m_liftLoose = liftLoose;
         m_elevatorUp = elevatorUp;
         m_elevatorDown = elevatorDown;
@@ -30,7 +33,21 @@ public class Elevate extends CommandBase {
         double lift_speed = SmartDashboard.getNumber("Lifters Speed", Constants.kLiftSpeed);
         double elevate_speed = SmartDashboard.getNumber("Elevator Speed", Constants.kElevateSpeed);
 
-        m_elevatorSubsystem.lifter.set(lift_speed*(m_lift.getAsDouble()-m_liftLoose.getAsDouble()));
+        if (m_lift_l.getAsBoolean()) {
+            m_elevatorSubsystem.lifter_l.set(lift_speed);
+        }
+        else {
+            m_elevatorSubsystem.lifter_l.set(0);
+        }
+        if (m_lift_r.getAsBoolean()) {
+            m_elevatorSubsystem.lifter_r.set(lift_speed);
+        }
+        else {
+            m_elevatorSubsystem.lifter_r.set(0);
+        }
+        if (m_liftLoose.getAsBoolean()) {
+            m_elevatorSubsystem.lifter.set(-lift_speed);
+        }
 
         if (m_elevatorUp.getAsBoolean()) {
             m_elevatorSubsystem.elevator.set(elevate_speed);

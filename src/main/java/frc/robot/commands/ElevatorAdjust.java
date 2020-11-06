@@ -41,12 +41,10 @@ public class ElevatorAdjust extends CommandBase {
             }
             
             if (m_LiftUp.getAsDouble() > 0.1) {
-                m_elevatorSubsystem.lifter_l.set(lift_speed * m_LiftUp.getAsDouble());
-                m_elevatorSubsystem.lifter_r.set(lift_speed * m_LiftUp.getAsDouble());
+                m_elevatorSubsystem.lifter.set(lift_speed * m_LiftUp.getAsDouble());
             }
             if (m_LiftDown.getAsDouble() > 0.1) {
-                m_elevatorSubsystem.lifter_l.set(-lift_speed * m_LiftDown.getAsDouble());
-                m_elevatorSubsystem.lifter_r.set(-lift_speed * m_LiftDown.getAsDouble());
+                m_elevatorSubsystem.lifter.set(-lift_speed * m_LiftDown.getAsDouble());
             }
         }
         else {
